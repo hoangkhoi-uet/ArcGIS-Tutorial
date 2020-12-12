@@ -1,10 +1,9 @@
-<!DOCTYPE html>
 <html>
 
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
-    <title>ArcGIS API for JavaScript Tutorials: Create a Starter App</title>
+    <title>ArcGIS API for JavaScript Tutorials: Draw graphics</title>
     <style>
         html,
         body,
@@ -23,38 +22,30 @@
         require([
             "esri/Map",
             "esri/views/MapView",
-            "esri/widgets/BasemapToggle",
-            "esri/widgets/BasemapGallery",
-        ], function(Map, MapView, BasemapToggle, BasemapGallery) {
+            "esri/layers/GraphicsLayer",
+            "esri/widgets/Sketch",
+        ], function(Map, MapView, GraphicsLayer, Sketch) {
+            // Creat a temporary layer for graphics
+            var graphicsLayer = new GraphicsLayer();
+
             var map = new Map({
                 basemap: "topo-vector",
+                layers: [graphicsLayer],
             });
 
             var view = new MapView({
                 container: "viewDiv",
                 map: map,
-                center: [-118.805, 34.027], // longitude, latitude
+                center: [-118.80543, 34.027],
                 zoom: 13,
             });
 
-            // var basemapToggle = new BasemapToggle({
-            //     view: view,
-            //     nextBasemap: "satellite",
-            // });
-
-            // view.ui.add(basemapToggle, "bottom-right");
-
-            var basemapGallery = new BasemapGallery({
+            var sketch = new Sketch({
                 view: view,
-                source: {
-                    portal: {
-                        url: "https://www.arcgis.com",
-                        useVectorBasemaps: true,
-                    },
-                },
+                layer: graphicsLayer,
             });
 
-            view.ui.add(basemapGallery, "top-right");
+            view.ui.add(sketch, "top-right");
         });
     </script>
 </head>
